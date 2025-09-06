@@ -23,7 +23,8 @@ const eslintConfig = [
 	},
 	{
 		rules: {
-			'@typescript-eslint/no-empty-interface': 'on'
+			// '@typescript-eslint/no-empty-interface': 'on',
+			'@typescript-eslint/no-empty-object-type': 'on'
 		}
 	}
 ];
