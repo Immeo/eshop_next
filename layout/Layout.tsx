@@ -7,9 +7,9 @@ import { LayoutProps } from './Layout.props';
 export const Layout = ({ children }: LayoutProps): React.JSX.Element => {
 	return (
 		<div className={styles.wrapper}>
-			<Header />
-			<main>{children}</main>
-			<Footer />
+			<Header className={styles.header} />
+			<main className={styles.body}>{children}</main>
+			<Footer className={styles.footer} />
 		</div>
 	);
 };
