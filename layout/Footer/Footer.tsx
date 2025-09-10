@@ -10,12 +10,12 @@ export const Footer = ({
 }: FooterProps): React.JSX.Element => {
 	return (
 		<footer className={cn(className, styles.footer)} {...props}>
-			<div>Eshop © {format(new Date(), 'yyyy')} Все права защищены</div>
+			<div>Eshop © {format(new Date(), 'yyyy')} All rights reserved</div>
 			<a href='#' target='_blank'>
-				Пользовательское соглашение
+				Terms of use
 			</a>
 			<a href='#' target='_blank'>
-				Политика конфиденциальности
+				Privacy Policy
 			</a>
 		</footer>
 	);
