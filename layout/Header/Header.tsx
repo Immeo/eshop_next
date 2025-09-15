@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import React from 'react';
+import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
 import LogoIcon from './eshop.svg';
@@ -17,9 +18,10 @@ export const Header = ({
 				</li>
 				<li>
 					<a href='/poduct'>Product</a>
+					<Menu />
 				</li>
 				<li>
-					<a href='/cntrack'>Contrack</a>
+					<a href='/about'>About us</a>
 				</li>
 			</ul>
 		</header>

@@ -1,3 +1,4 @@
+import { IMenuContext, MenuContextProvider } from '@/context/menu/menu.context';
 import React from 'react';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
@@ -8,8 +9,22 @@ export const Layout = ({ children }: LayoutProps): React.JSX.Element => {
 	return (
 		<div className={styles.wrapper}>
 			<Header className={styles.header} />
-			<main className={styles.body}>{children}</main>
+			<main className={styles.main}>{children}</main>
 			<Footer className={styles.footer} />
 		</div>
 	);
+};
+
+export const withLayout = <T extends Record<string, unknown> & IMenuContext>(
+	Component: React.FC<T>
+) => {
+	return function withLayoutComponent(props: T): React.JSX.Element {
+		return (
+			<MenuContextProvider menu={props.menu}>
+				<Layout>
+					<Component {...props} />
+				</Layout>
+			</MenuContextProvider>
+		);
+	};
 };
