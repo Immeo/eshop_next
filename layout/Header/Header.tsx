@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import Link from 'next/link';
 import React from 'react';
 import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
@@ -14,14 +15,20 @@ export const Header = ({
 			<LogoIcon />
 			<ul className={styles.list}>
 				<li>
-					<a href='/'>Home</a>
+					<Link href='/' className={styles.link}>
+						Home
+					</Link>
 				</li>
 				<li>
-					<a href='/poduct'>Product</a>
+					<Link href='/poduct' className={styles.link}>
+						Product
+					</Link>
 					<Menu />
 				</li>
 				<li>
-					<a href='/about'>About us</a>
+					<Link href='/about' className={styles.link}>
+						About us
+					</Link>
 				</li>
 			</ul>
 		</header>
