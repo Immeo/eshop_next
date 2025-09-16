@@ -12,16 +12,16 @@ export const Menu = ({
 }) => {
 	const { menu } = useContext(MenuContext);
 	return (
-		<ul tabIndex={isMenuOpened ? 0 : -1} className={styles.subMenu} {...props}>
-			{menu.map(m => (
-				<li
-					tabIndex={isMenuOpened ? 0 : -1}
-					className={styles.subMenuItem}
-					key={m.slug}
-				>
-					<Link href={m.slug}>{m.name}</Link>
-				</li>
-			))}
-		</ul>
+		<>
+			{isMenuOpened && (
+				<ul className={styles.subMenu} {...props}>
+					{menu.map(m => (
+						<li className={styles.subMenuItem} key={m.slug}>
+							<Link href={m.slug}>{m.name}</Link>
+						</li>
+					))}
+				</ul>
+			)}
+		</>
 	);
 };
