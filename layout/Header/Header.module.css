@@ -4,3 +4,35 @@
 	justify-content: space-between;
 	align-items: center;
 }
+
+.logo {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.list {
+	display: flex;
+	list-style: none;
+	justify-content: space-between;
+	gap: 1rem;
+	align-items: center;
+}
+
+.animatedMenu {
+	position: relative;
+}
+
+.link {
+	font-size: 1rem;
+	font-weight: 700;
+	text-decoration: none;
+	white-space: nowrap;
+	border: none;
+	background: none;
+	transition: color 0.2 ease-out;
+	color: var(--text);
+}
+
+.link:hover {
+	color: var(--primary-hover);
+}

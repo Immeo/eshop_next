@@ -1,12 +1,26 @@
 import { MenuContext } from '@/context/menu/menu.context';
+import Link from 'next/link';
 import { useContext } from 'react';
 
-export const Menu = () => {
+import styles from './Menu.module.css';
+
+export const Menu = ({
+	isMenuOpened = false,
+	...props
+}: {
+	isMenuOpened: boolean;
+}) => {
 	const { menu } = useContext(MenuContext);
 	return (
-		<ul>
+		<ul tabIndex={isMenuOpened ? 0 : -1} className={styles.subMenu} {...props}>
 			{menu.map(m => (
-				<li key={m.slug}>{m.name}</li>
+				<li
+					tabIndex={isMenuOpened ? 0 : -1}
+					className={styles.subMenuItem}
+					key={m.slug}
+				>
+					<Link href={m.slug}>{m.name}</Link>
+				</li>
 			))}
 		</ul>
 	);

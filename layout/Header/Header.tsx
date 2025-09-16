@@ -1,18 +1,29 @@
 import cn from 'classnames';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import React from 'react';
 import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
-import LogoIcon from './eshop.svg';
+import Logo from './eshop.svg';
 
 export const Header = ({
 	className,
 	...props
 }: HeaderProps): React.JSX.Element => {
+	const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const variants = {
+		hidden: { height: 0, opacity: 0 },
+		visible: { height: 'auto', opacity: 1 }
+	};
 	return (
 		<header className={cn(styles.header, className)} {...props}>
-			<LogoIcon />
+			<Logo className={styles.logo} />
 			<ul className={styles.list}>
 				<li>
 					<Link href='/' className={styles.link}>
@@ -20,10 +31,17 @@ export const Header = ({
 					</Link>
 				</li>
 				<li>
-					<Link href='/poduct' className={styles.link}>
+					<button type='button' onClick={toggleMenu} className={styles.link}>
 						Product
-					</Link>
-					<Menu />
+					</button>
+					<motion.div
+						animate={isMenuOpen ? 'visible' : 'hidden'}
+						initial='hidden'
+						variants={variants}
+						className={styles.animatedMenu}
+					>
+						<Menu isMenuOpened={isMenuOpen} />
+					</motion.div>
 				</li>
 				<li>
 					<Link href='/about' className={styles.link}>
