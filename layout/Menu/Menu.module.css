@@ -10,7 +10,7 @@
 	list-style: none;
 	font-weight: 700;
 	box-shadow: 1px 1px 43px rgba(0, 0, 0, 0.1), -1px 1px 1px rgba(0, 0, 0, 0.1);
-	background: var(--subbackground);
+	background: var(--actionbackground);
 }
 
 .subMenu a {

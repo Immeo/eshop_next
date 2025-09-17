@@ -5,7 +5,7 @@
 	min-height: 100vh;
 	gap: 40px 30px;
 	grid-template-areas:
-		'. header header .'
+		'header header header header'
 		'. main main .'
 		'footer footer footer footer';
 }

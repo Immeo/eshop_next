@@ -23,15 +23,22 @@ export const Header = ({
 	};
 	return (
 		<header className={cn(styles.header, className)} {...props}>
-			<Logo className={styles.logo} />
+			<Logo aria-label='Logo' className={styles.logo} />
 			<ul className={styles.list}>
 				<li>
 					<Link href='/' className={styles.link}>
 						Home
 					</Link>
 				</li>
-				<li>
-					<button type='button' onClick={toggleMenu} className={styles.link}>
+				<li aria-label='A list item with a button inside to open the list of categories'>
+					<button
+						type='button'
+						aria-label='Open list category'
+						aria-expanded={isMenuOpen}
+						onClick={toggleMenu}
+						id='btncat'
+						className={styles.link}
+					>
 						Product
 					</button>
 					<motion.div
