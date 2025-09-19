@@ -1,5 +1,7 @@
 .header {
 	display: flex;
+	max-width: 100vw;
+	position: relative;
 	padding: 2rem;
 	gap: 0 0.9rem;
 	justify-content: space-between;
@@ -25,6 +27,11 @@
 	position: relative;
 }
 
+.subMenuDesktop {
+	top: 10px;
+	left: -51px;
+}
+
 .link {
 	font-size: 1rem;
 	font-weight: 700;
@@ -38,4 +45,87 @@
 
 .link:hover {
 	color: var(--primary-hover);
+}
+
+.mobileMenuOpen {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	max-width: 100vw;
+	background: var(--actionbackground);
+	z-index: 10;
+}
+
+.mobileMenuClose {
+	display: none;
+	z-index: 0;
+}
+
+.burgerBtn {
+	display: none;
+}
+
+.hiddenMenu {
+	display: none;
+}
+
+@media screen and (max-width: 436px) {
+	.list {
+		display: none;
+	}
+
+	/* .mobileMenuOpen {
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		max-width: 100vw;
+		background: var(--actionbackground);
+		z-index: 10;
+	}
+
+	.mobileMenuClose {
+		display: none ;
+		z-index: 0;
+	} */
+
+	.mobileList {
+		display: flex;
+		position: relative;
+		gap: 1rem;
+		flex-direction: column;
+		align-items: center;
+		list-style: none;
+	}
+
+	.subMenuMobile {
+		right: 25%;
+	}
+
+	.burgerBtn,
+	.closeBtn {
+		display: block;
+		max-width: 2.75rem;
+		max-height: 2.75rem;
+		border: none;
+		background: none;
+	}
+
+	.burger,
+	.close {
+		width: 100%;
+		height: 100%;
+	}
+
+	.closeBtn {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		z-index: 20;
+	}
 }

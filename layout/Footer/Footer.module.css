@@ -21,8 +21,9 @@
 	color: var(--primary-hover);
 }
 
-@media (max-width: 765px) {
+@media (max-width: 561px) {
 	.footer {
 		grid-template-columns: 1fr;
+		justify-items: center;
 	}
 }
