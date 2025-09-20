@@ -1,3 +1,4 @@
+import { API } from '@/helpers/api';
 import { IMenu } from '@/interfaces/menu';
 import { withLayout } from '@/layout/Layout';
 import axios from 'axios';
@@ -21,9 +22,7 @@ export default withLayout(Home);
 
 export const getStaticProps = async () => {
 	try {
-		const { data: menu } = await axios.get<IMenu[]>(
-			process.env.NEXT_PUBLIC_DOMAIN + 'products/categories'
-		);
+		const { data: menu } = await axios.get<IMenu[]>(API.byCategory.all);
 		return {
 			props: {
 				menu
