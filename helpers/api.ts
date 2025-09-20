@@ -12,6 +12,10 @@ export const API = {
 			process.env.NEXT_PUBLIC_DOMAIN + `products?limit=${limit}`,
 		solo: (id: number) => process.env.NEXT_PUBLIC_DOMAIN + `products/${id}`,
 		sort: (what: Product, order: 'asc' | 'desc') =>
-			process.env.NEXT_PUBLIC_DOMAIN + `products?sorting=${what}&order=${order}`
+			process.env.NEXT_PUBLIC_DOMAIN +
+			`products?sorting=${what}&order=${order}`,
+		someAndSort: (what: Product, order: 'asc' | 'desc', limit: number) =>
+			process.env.NEXT_PUBLIC_DOMAIN +
+			`products?sorting=${what}&order=${order}&limit=${limit}`
 	}
 };
