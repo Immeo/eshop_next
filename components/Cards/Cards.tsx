@@ -13,7 +13,7 @@ export const Cards = ({ products }: CardsProps): React.JSX.Element => {
 		<>
 			<motion.ul className={styles.cards} layout>
 				{products.products.map((item: IProduct) => (
-					<motion.li key={item.id} layout>
+					<motion.li key={item.id} layout className={styles.cardsItem}>
 						<Card product={item} />
 					</motion.li>
 				))}

@@ -11,9 +11,10 @@ export const Card = ({ product }: CardProps): React.JSX.Element => {
 					<Image
 						key={image}
 						src={image}
-						alt={product.title}
 						width={200}
 						height={200}
+						priority={true}
+						alt={product.title}
 					/>
 				))}
 				<div className={styles.info}>
