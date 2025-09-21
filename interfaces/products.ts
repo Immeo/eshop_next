@@ -1,11 +1,11 @@
-export interface AllProducts {
-	products: Product[];
+export interface IAllProducts {
+	products: IProduct[];
 	total: number;
 	skip: number;
 	limit: number;
 }
 
-export interface Product {
+export interface IProduct {
 	id: number;
 	title: string;
 	description: string;
@@ -18,25 +18,25 @@ export interface Product {
 	brand?: string;
 	sku: string;
 	weight: number;
-	dimensions: Dimensions;
+	dimensions: IDimensions;
 	warrantyInformation: string;
 	shippingInformation: string;
 	availabilityStatus: string;
-	reviews: Review[];
+	reviews: IReview[];
 	returnPolicy: string;
 	minimumOrderQuantity: number;
-	meta: Meta;
+	meta: IMeta;
 	images: string[];
 	thumbnail: string;
 }
 
-export interface Dimensions {
+export interface IDimensions {
 	width: number;
 	height: number;
 	depth: number;
 }
 
-export interface Review {
+export interface IReview {
 	rating: number;
 	comment: string;
 	date: string;
@@ -44,7 +44,7 @@ export interface Review {
 	reviewerEmail: string;
 }
 
-export interface Meta {
+export interface IMeta {
 	createdAt: string;
 	updatedAt: string;
 	barcode: string;

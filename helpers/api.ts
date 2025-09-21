@@ -1,4 +1,6 @@
-import { Product } from '@/interfaces/products';
+import { IProduct } from '@/interfaces/products';
+
+type productKey = keyof IProduct;
 
 export const API = {
 	byCategory: {
@@ -11,10 +13,10 @@ export const API = {
 		some: (limit: number) =>
 			process.env.NEXT_PUBLIC_DOMAIN + `products?limit=${limit}`,
 		solo: (id: number) => process.env.NEXT_PUBLIC_DOMAIN + `products/${id}`,
-		sort: (what: Product, order: 'asc' | 'desc') =>
+		sort: (what: productKey, order: 'asc' | 'desc') =>
 			process.env.NEXT_PUBLIC_DOMAIN +
 			`products?sorting=${what}&order=${order}`,
-		someAndSort: (what: Product, order: 'asc' | 'desc', limit: number) =>
+		someAndSort: (what: productKey, order: 'asc' | 'desc', limit: number) =>
 			process.env.NEXT_PUBLIC_DOMAIN +
 			`products?sorting=${what}&order=${order}&limit=${limit}`
 	}
