@@ -4,3 +4,15 @@
 	grid-template-columns: [startlist] repeat(3, 1fr) [endlist];
 	list-style: none;
 }
+
+@media screen and (max-width: 863px) {
+	.cards {
+		grid-template-columns: [startlist] repeat(2, 1fr) [endlist];
+	}
+}
+
+@media screen and (max-width: 530px) {
+	.cards {
+		grid-template-columns: [startlist] 1fr [endlist];
+	}
+}
