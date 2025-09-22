@@ -6,8 +6,15 @@
 	--actionbackground: #fafafa;
 	--text: #000;
 	--title: #003366;
-	--subTitle: #66b2ff;
-	--button: #cccccc;
+	--subtitle: #23609a;
+	--subtitle-hover: #4c396f;
+	--price-standart: #32773e;
+	--price-discount: #b81414;
+	--price-old: #5f5d5d;
+	--button-type-one: #ccf8ad;
+	--button-type-two: #093ccd;
+	--button-type-two-text: #dbfb1a;
+	--button-type-two-text-hover: #cadd5f;
 }
 
 body {
