@@ -1,4 +1,5 @@
 import { IMenuContext, MenuContextProvider } from '@/context/menu/menu.context';
+import { EshopProductsProps } from '@/pages/category/[alias]';
 import React from 'react';
 import { Footer } from './Footer/Footer';
 import { Header } from './Header/Header';
@@ -15,7 +16,9 @@ export const Layout = ({ children }: LayoutProps): React.JSX.Element => {
 	);
 };
 
-export const withLayout = <T extends Record<string, unknown> & IMenuContext>(
+export const withLayout = <
+	T extends Record<string, unknown> & IMenuContext & EshopProductsProps
+>(
 	Component: React.FC<T>
 ) => {
 	return function withLayoutComponent(props: T): React.JSX.Element {

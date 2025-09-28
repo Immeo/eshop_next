@@ -14,13 +14,14 @@ export const Menu = ({
 	className?: string;
 }) => {
 	const { menu } = useContext(MenuContext);
+
 	return (
 		<>
 			{isMenuOpened && (
 				<ul {...props} className={cn(styles.subMenu, className)}>
 					{menu.map(m => (
 						<li className={styles.subMenuItem} key={m.slug}>
-							<Link href={m.slug}>{m.name}</Link>
+							<Link href={`/category/${m.slug}`}>{m.name}</Link>
 						</li>
 					))}
 				</ul>
