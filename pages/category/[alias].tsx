@@ -5,17 +5,34 @@ import { IAllProducts } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
 import axios from 'axios';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 
 function EshopProducts({ products }: EshopProductsProps) {
 	if (!products) {
 		return <div>Products not found</div>;
 	}
-	console.log(products);
 
 	return (
 		<>
+			<Head>
+				<title>Eshop - category {products.products[0].category}</title>
+				<meta property='og:title' content={products.products[0].category} />
+				<meta name='description' content={products.products[0].description} />
+				<meta
+					property='og:description'
+					content={products.products[0].description}
+				/>
+				<meta property='og:image' content={products.products[0].images[0]} />
+				<meta property='og:type' content='article' />
+			</Head>
 			{products.products.length ? (
-				<Cards products={products} />
+				<div>
+					<h2>
+						Category: {products.products[0].category}, total products:{' '}
+						{products.total}
+					</h2>
+					<Cards products={products} />
+				</div>
 			) : (
 				<div>Products not found</div>
 			)}
@@ -44,8 +61,6 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-	console.log(`params: ${params}`);
-
 	if (!params) {
 		return {
 			notFound: true

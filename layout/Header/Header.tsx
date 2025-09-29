@@ -1,7 +1,8 @@
 import cn from 'classnames';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
@@ -16,6 +17,15 @@ export const Header = ({
 	const [isMenuOpen, setIsMenuOpen] = React.useState<boolean>(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] =
 		React.useState<boolean>(false);
+	const route = useRouter();
+
+	useEffect(() => {
+		if (isMenuOpen) {
+			setIsMenuOpen(false);
+		} else if (isMobileMenuOpen) {
+			setIsMobileMenuOpen(false);
+		}
+	}, [route]);
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);

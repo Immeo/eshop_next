@@ -35,7 +35,7 @@ export const getStaticProps = async () => {
 			};
 		}
 		const { data: products } = await axios.get<IProduct[]>(
-			API.byProduct.someAndSort('rating', 'asc', 5)
+			API.byProduct.someAndSort('rating', 'asc', 6)
 		);
 		return {
 			props: {
