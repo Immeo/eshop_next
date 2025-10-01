@@ -53,8 +53,8 @@ export const Rating = forwardRef(
 							role={isEditable ? 'slider' : ''}
 							aria-label={
 								isEditable
-									? 'Укажите рейтинг стрелками вверх или вниз'
-									: `рейтинг ${rating}`
+									? 'Select a rating. Use the arrow keys on your keyboard to move between the stars'
+									: `Rating ${rating}`
 							}
 							aria-valuemin={1}
 							aria-valuemax={5}
