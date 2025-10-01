@@ -1,5 +1,9 @@
 .filled svg {
-	fill: var(--subtitle);
+	fill: var(--rating-star);
+}
+
+.filled svg {
+	fill: var(--rating-star-hover);
 }
 
 .star {

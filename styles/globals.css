@@ -15,6 +15,9 @@
 	--button-type-two: #093ccd;
 	--button-type-two-text: #dbfb1a;
 	--button-type-two-text-hover: #cadd5f;
+	--rating-star: #9a27b9;
+	--rating-star-hover: #6d1b83;
+	--red: red;
 }
 
 body {
