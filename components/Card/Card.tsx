@@ -1,4 +1,5 @@
 import React from 'react';
+import { Rating } from '../Rating/Rating';
 import styles from './Card.module.css';
 import { CardProps } from './Card.props';
 
@@ -8,6 +9,7 @@ export const Card = ({ product }: CardProps): React.JSX.Element => {
 			<div className={styles.card}>
 				<div className={styles.image}>
 					<img src={product.images[0]} alt={product.title} />
+					<Rating rating={product.rating} isEditable={false} />
 				</div>
 				<div className={styles.info}>
 					<h3 className={styles.title}>{product.title}</h3>
