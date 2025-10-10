@@ -1,4 +1,4 @@
-import { Search } from '@/components/Search/Search';
+import { SearchForm } from '@/components/SearchForm/SearchForm';
 import cn from 'classnames';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -49,7 +49,7 @@ export const Header = ({
 	return (
 		<header className={cn(styles.header, className)} {...props}>
 			<Logo aria-label='Logo' className={styles.logo} />
-			<Search />
+			<SearchForm />
 			<ul className={styles.list}>
 				<li>
 					<Link href='/' className={styles.link}>

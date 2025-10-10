@@ -13,6 +13,8 @@ export const API = {
 		some: (limit: number) =>
 			process.env.NEXT_PUBLIC_DOMAIN + `products?limit=${limit}`,
 		solo: (id: number) => process.env.NEXT_PUBLIC_DOMAIN + `products/${id}`,
+		search: (query: string) =>
+			process.env.NEXT_PUBLIC_DOMAIN + `products/search?q=${query}`,
 		sort: (what: productKey, order: 'asc' | 'desc') =>
 			process.env.NEXT_PUBLIC_DOMAIN +
 			`products?sorting=${what}&order=${order}`,
