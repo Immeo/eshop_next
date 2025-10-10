@@ -1,5 +1,3 @@
-'use client';
-
 import { Cards } from '@/components/Cards/Cards';
 import { API } from '@/helpers/api';
 import { IAllProducts } from '@/interfaces/products';
@@ -7,6 +5,7 @@ import { withLayout } from '@/layout/Layout';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import styles from './search.module.css';
 
 function Search() {
 	const [products, setProducts] = useState<IAllProducts | null>(null);
@@ -15,7 +14,6 @@ function Search() {
 
 	const params = useSearchParams();
 	const search = params.get('q');
-	console.log(`search: ${search}`);
 
 	useEffect(() => {
 		if (!search) {
@@ -58,27 +56,33 @@ function Search() {
 	}, [search]);
 
 	return (
-		<>
-			<div>Search: {search || '—'}</div>
+		<div className={styles.wrapper}>
+			<h2 className={styles.title}>
+				Search: {search || '—'}. {search ? `${products?.limit} results` : ''}
+			</h2>
 
 			{isLoading && <div>Loading...</div>}
 
 			{error && (
-				<div role='alert' style={{ color: 'crimson' }}>
+				<div role='alert' className={styles.error}>
 					{error}
 				</div>
 			)}
 
 			{!isLoading && !error && !search && (
-				<div>Enter search query in address bar (?q=...)</div>
+				<div className={styles.info}>
+					Enter search query in address bar (?q=...)
+				</div>
 			)}
 
 			{!isLoading && !error && search && products && (
 				<Cards products={products} />
 			)}
 
-			{!isLoading && !error && search && !products && <div>Nothing found</div>}
-		</>
+			{!isLoading && !error && search && !products && (
+				<div className={styles.info}>Nothing found</div>
+			)}
+		</div>
 	);
 }
 
