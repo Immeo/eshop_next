@@ -1,7 +1,6 @@
 import { Cards } from '@/components/Cards/Cards';
 import { API } from '@/helpers/api';
-import { IMenu } from '@/interfaces/menu';
-import { IAllProducts, IProduct } from '@/interfaces/products';
+import { IAllProducts } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
 import axios from 'axios';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -16,7 +15,7 @@ const geistMono = Geist_Mono({
 	subsets: ['latin']
 });
 
-function Home({ menu, products }: HomeProps) {
+function Home({ products }: HomeProps) {
 	return (
 		<>
 			<Cards products={products} />
@@ -28,18 +27,11 @@ export default withLayout(Home);
 
 export const getStaticProps = async () => {
 	try {
-		const { data: menu } = await axios.get<IMenu[]>(API.byCategory.all);
-		if (!menu) {
-			return {
-				notFound: true
-			};
-		}
-		const { data: products } = await axios.get<IProduct[]>(
+		const { data: products } = await axios.get<IAllProducts>(
 			API.byProduct.someAndSort('rating', 'asc', 6)
 		);
 		return {
 			props: {
-				menu,
 				products
 			}
 		};
@@ -47,13 +39,12 @@ export const getStaticProps = async () => {
 		console.log(error);
 		return {
 			props: {
-				menu: []
+				products: []
 			}
 		};
 	}
 };
 
 interface HomeProps extends Record<string, unknown> {
-	menu: IMenu[];
 	products: IAllProducts;
 }

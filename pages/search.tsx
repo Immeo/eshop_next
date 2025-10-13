@@ -2,10 +2,10 @@ import { Cards } from '@/components/Cards/Cards';
 import { API } from '@/helpers/api';
 import { IAllProducts } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
+import styles from '@/styles/search.module.css';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import styles from './search.module.css';
 
 function Search() {
 	const [products, setProducts] = useState<IAllProducts | null>(null);
