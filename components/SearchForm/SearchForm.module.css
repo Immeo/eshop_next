@@ -1,9 +1,10 @@
 .search {
-	position: relative;
+	display: flex;
 	max-width: 30vw;
 }
 
 .input {
+	max-width: inherit;
 	padding: 1rem;
 	font-size: 1rem;
 	line-height: 1;
@@ -29,4 +30,16 @@
 	transition: all 0.2s;
 	background: var(--button-type-two);
 	cursor: pointer;
+}
+
+@media screen and (max-width: 906px) {
+	.search {
+		max-width: 15vw;
+	}
+}
+
+@media screen and (max-width: 606px) {
+	.search {
+		max-width: 10vw;
+	}
 }

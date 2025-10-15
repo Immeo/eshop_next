@@ -49,7 +49,9 @@ export const Header = ({
 	return (
 		<header className={cn(styles.header, className)} {...props}>
 			<Logo aria-label='Logo' className={styles.logo} />
-			<SearchForm />
+			<div className={styles.searchDesktop}>
+				<SearchForm />
+			</div>
 			<ul className={styles.list}>
 				<li>
 					<Link href='/' className={styles.link}>
@@ -104,6 +106,7 @@ export const Header = ({
 					>
 						<CloseIcon className={styles.close} />
 					</button>
+					<SearchForm className={styles.searchMobile} />
 					<motion.ul
 						initial='hidden'
 						variants={variantsMobile}

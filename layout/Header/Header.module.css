@@ -48,13 +48,16 @@
 }
 
 .mobileMenuOpen {
-	display: block;
+	display: flex;
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
 	max-width: 100vw;
+	max-height: auto;
+	flex-direction: column;
+	align-items: center;
 	background: var(--actionbackground);
 	z-index: 10;
 }
@@ -72,27 +75,24 @@
 	display: none;
 }
 
-@media screen and (max-width: 436px) {
+@media screen and (max-width: 572px) {
+	.logo {
+		max-width: 70px;
+	}
+}
+
+@media screen and (max-width: 539px) {
 	.list {
 		display: none;
 	}
 
-	/* .mobileMenuOpen {
-		display: block;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		max-width: 100vw;
-		background: var(--actionbackground);
-		z-index: 10;
+	.searchDesktop {
+		display: none;
 	}
 
-	.mobileMenuClose {
-		display: none ;
-		z-index: 0;
-	} */
+	.searchMobile {
+		max-width: 30vw;
+	}
 
 	.mobileList {
 		display: flex;
