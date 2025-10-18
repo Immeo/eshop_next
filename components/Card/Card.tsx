@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { Rating } from '../Rating/Rating';
 import styles from './Card.module.css';
@@ -12,7 +13,9 @@ export const Card = ({ product }: CardProps): React.JSX.Element => {
 					<Rating rating={product.rating} isEditable={false} />
 				</div>
 				<div className={styles.info}>
-					<h3 className={styles.title}>{product.title}</h3>
+					<h3 className={styles.title}>
+						<Link href={`product/${product.id}`}>{product.title}</Link>
+					</h3>
 					{product.discountPercentage ? (
 						<div className={styles.prices}>
 							<span className={styles.discount}>

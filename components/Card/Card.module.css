@@ -31,7 +31,7 @@
 	flex-direction: column;
 }
 
-.title {
+.title a {
 	font-size: 1.1rem;
 	line-height: 1;
 	text-decoration: none;
