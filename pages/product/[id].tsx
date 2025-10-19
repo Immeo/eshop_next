@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { API } from '@/helpers/api';
 import { IAllProducts, IProduct } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
+import Link from 'next/link';
 import styles from './Product.module.css';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com';
@@ -18,7 +19,7 @@ function ProductPage({
 	const router = useRouter();
 
 	if (router.isFallback) {
-		return <div className={styles.skeleton}>Loading produc</div>;
+		return <div className={styles.skeleton}>Loading product</div>;
 	}
 
 	if (!product) {
@@ -52,14 +53,94 @@ function ProductPage({
 				</div>
 
 				<div className={styles.productInfo}>
-					<h1 className={styles.productTitle}>{product.title}</h1>
-					<p className={styles.productDescription}>{product.description}</p>
-					<p className={styles.productPrice}>
-						{new Intl.NumberFormat('en-US', {
-							style: 'currency',
-							currency: 'USD'
-						}).format(product.price)}
-					</p>
+					<h2 className={styles.productTitle}>{product.title}</h2>
+					<Link
+						href={`/category/${product.category}`}
+						className={styles.productCategory}
+					>
+						Category: {product.category}
+					</Link>
+					<ul className={styles.productTags}>
+						Tags:
+						{product.tags.map((tag, index) => (
+							<li key={index}>
+								<Link href={tag} className={styles.productTag}>
+									{tag}
+								</Link>
+							</li>
+						))}
+					</ul>
+					<Link
+						href={`/brands/${product.brand}`}
+						className={styles.productBrand}
+					>
+						Brand: {product.brand}
+					</Link>
+					<div className={styles.productDimensions}>
+						<div>Dimensions:</div>
+						<div className={styles.productDimension}>
+							Width: {product.dimensions.width}
+						</div>
+						<div className={styles.productDimension}>
+							Height:
+							{product.dimensions.height}
+						</div>
+						<div className={styles.productDimension}>
+							Depth:
+							{product.dimensions.depth}
+						</div>
+					</div>
+
+					<div>
+						Stock:{' '}
+						{product.stock <= 5 ? `remained ${product.stock}` : product.stock}
+					</div>
+					<div className={styles.warranty}>
+						Warranty:{' '}
+						{product.warrantyInformation
+							? `${product.warrantyInformation}`
+							: 'No warranty'}
+					</div>
+					<div className={styles.productDelivery}>
+						Delivery:{' '}
+						{product.shippingInformation
+							? `${product.shippingInformation}`
+							: 'No delivery'}
+					</div>
+					<div className={styles.productReturn}>
+						Return:{' '}
+						{product.returnPolicy ? `${product.returnPolicy}` : 'No return'}
+					</div>
+				</div>
+				<div className={styles.order}>
+					<div className={styles.productPrices}>
+						<div className={styles.productPrice}>
+							{new Intl.NumberFormat('en-US', {
+								style: 'currency',
+								currency: 'USD'
+							}).format(product.price)}
+						</div>
+						<div className={styles.productDiscount}>
+							{new Intl.NumberFormat('en-US', {
+								style: 'currency',
+								currency: 'USD'
+							}).format(product.price * (1 - product.discountPercentage / 100))}
+						</div>
+					</div>
+					<div className={styles.politices}>
+						<input type='checkbox' name='politice' id='politice' />
+						<label htmlFor='politice'>I agree with the terms of sale</label>
+					</div>
+					<button type='button' className={styles.buy}>
+						Buy now
+					</button>
+					<button type='button' className={styles.cart}>
+						Add to card
+					</button>
+				</div>
+				<div className={styles.productDescription}>
+					<h3>About product</h3>
+					<p>{product.description}</p>
 				</div>
 			</div>
 		</>
