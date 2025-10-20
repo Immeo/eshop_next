@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { Rating } from '../Rating/Rating';
 import styles from './Card.module.css';
 import { CardProps } from './Card.props';
 
 export const Card = ({ product }: CardProps): React.JSX.Element => {
+	const router = useRouter();
 	return (
 		<div>
 			<div className={styles.card}>
@@ -14,7 +16,15 @@ export const Card = ({ product }: CardProps): React.JSX.Element => {
 				</div>
 				<div className={styles.info}>
 					<h3 className={styles.title}>
-						<Link href={`product/${product.id}`}>{product.title}</Link>
+						<Link
+							href={
+								router.query.category
+									? `/product/${product.id}`
+									: `/product/${product.id}`
+							}
+						>
+							{product.title}
+						</Link>{' '}
 					</h3>
 					{product.discountPercentage ? (
 						<div className={styles.prices}>
