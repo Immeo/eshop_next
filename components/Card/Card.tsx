@@ -28,10 +28,22 @@ export const Card = ({ product }: CardProps): React.JSX.Element => {
 					</h3>
 					{product.discountPercentage ? (
 						<div className={styles.prices}>
-							<span className={styles.discount}>
-								{product.discountPercentage}$
-							</span>
-							<span className={styles.oldPrice}>{product.price}$</span>
+							<div className={styles.discount}>
+								{new Intl.NumberFormat('en-US', {
+									style: 'currency',
+									currency: 'USD'
+								}).format(
+									product.price * (1 - product.discountPercentage / 100)
+								)}
+								<span>Discount price</span>
+							</div>
+							<div className={styles.price}>
+								{new Intl.NumberFormat('en-US', {
+									style: 'currency',
+									currency: 'USD'
+								}).format(product.price)}
+								<span>Standart price</span>
+							</div>
 						</div>
 					) : (
 						<span className={styles.price}>{product.price}$</span>

@@ -51,12 +51,18 @@
 }
 
 .price {
+	display: flex;
 	font-size: 0.9rem;
+	flex-direction: column;
+	align-items: center;
 	color: var(--price-standart);
 }
 
 .discount {
+	display: flex;
 	font-size: 0.9rem;
+	flex-direction: column;
+	align-items: center;
 	color: var(--price-discount);
 }
 
