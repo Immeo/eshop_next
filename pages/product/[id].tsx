@@ -1,11 +1,12 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+import { Rating } from '@/components/Rating/Rating';
 import { API } from '@/helpers/api';
 import { IAllProducts, IProduct } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
+import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Product.module.css';
 
@@ -41,19 +42,21 @@ function ProductPage({
 				<meta property='og:image' content={abs(image)} />
 			</Head>
 			<div className={styles.wrapper}>
-				<div className={styles.productImage}>
-					<Image
-						src={image}
-						alt={product.title}
-						width={600}
-						height={600}
-						sizes='(max-width: 768px) 100vw, 600px'
-						priority
-					/>
-				</div>
-
+				<Image
+					src={image}
+					width={350}
+					height={350}
+					alt={product.title}
+					priority
+					className={styles.productImage}
+				/>
 				<div className={styles.productInfo}>
 					<h2 className={styles.productTitle}>{product.title}</h2>
+					{product.rating && (
+						<div className={styles.productRating}>
+							Rating: <Rating rating={product.rating} />
+						</div>
+					)}
 					<Link
 						href={`/category/${product.category}`}
 						className={styles.productCategory}
@@ -90,25 +93,24 @@ function ProductPage({
 							{product.dimensions.depth}
 						</div>
 					</div>
-
 					<div>
-						Stock:{' '}
+						Stock:
 						{product.stock <= 5 ? `remained ${product.stock}` : product.stock}
 					</div>
 					<div className={styles.warranty}>
-						Warranty:{' '}
+						Warranty:
 						{product.warrantyInformation
 							? `${product.warrantyInformation}`
 							: 'No warranty'}
 					</div>
 					<div className={styles.productDelivery}>
-						Delivery:{' '}
+						Delivery:
 						{product.shippingInformation
 							? `${product.shippingInformation}`
 							: 'No delivery'}
 					</div>
 					<div className={styles.productReturn}>
-						Return:{' '}
+						Return:
 						{product.returnPolicy ? `${product.returnPolicy}` : 'No return'}
 					</div>
 				</div>
@@ -119,24 +121,25 @@ function ProductPage({
 								style: 'currency',
 								currency: 'USD'
 							}).format(product.price)}
+							<span>Price</span>
 						</div>
+						<span>or</span>
 						<div className={styles.productDiscount}>
 							{new Intl.NumberFormat('en-US', {
 								style: 'currency',
 								currency: 'USD'
 							}).format(product.price * (1 - product.discountPercentage / 100))}
+							<span>Discount </span>
 						</div>
 					</div>
-					<div className={styles.politices}>
-						<input type='checkbox' name='politice' id='politice' />
-						<label htmlFor='politice'>I agree with the terms of sale</label>
+					<div className={styles.productBtns}>
+						<button type='button' className={styles.buy}>
+							Buy now
+						</button>
+						<button type='button' className={styles.cart}>
+							Add to card
+						</button>
 					</div>
-					<button type='button' className={styles.buy}>
-						Buy now
-					</button>
-					<button type='button' className={styles.cart}>
-						Add to card
-					</button>
 				</div>
 				<div className={styles.productDescription}>
 					<h3>About product</h3>
