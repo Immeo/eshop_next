@@ -10,7 +10,7 @@
 	grid-template-areas:
 		'image info order'
 		'description description description';
-	align-items: start;
+	align-items: flex-start;
 }
 
 .productImage {
@@ -27,7 +27,7 @@
 	gap: 1rem 0;
 	font-size: 1rem;
 	flex-direction: column;
-	align-items: start;
+	align-items: flex-start;
 	overflow-y: hidden;
 	transition: all 0.2s ease;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);

@@ -1,5 +1,6 @@
 import { Cards } from '@/components/Cards/Cards';
 import { API } from '@/helpers/api';
+
 import { IAllProducts } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
 import styles from '@/styles/search.module.css';
@@ -38,7 +39,7 @@ function Search() {
 					throw new Error('Nothing found');
 				}
 				setProducts(res.data);
-			} catch (err: any) {
+			} catch (err) {
 				if (axios.isCancel?.(err)) return;
 				console.error(err);
 				setError('Failed to load results. Please try again.');
