@@ -145,6 +145,34 @@ function ProductPage({
 					<h3>About product</h3>
 					<p>{product.description}</p>
 				</div>
+				<div className={styles.productReviews}>
+					{product.reviews && product.reviews.length > 0
+						? product.reviews.map((review, index) => (
+								<ul key={index} className={styles.productReview}>
+									<li>
+										<div className={styles.productReview}>
+											<h4 className={styles.productReviewName}>
+												{review.reviewerName}
+											</h4>
+											<div className={styles.productReviewDate}>
+												{review.date}
+											</div>
+											{review.rating && (
+												<div className={styles.productReviewRating}>
+													Rating: <Rating rating={review.rating} />
+												</div>
+											)}
+											{review.comment && (
+												<p className={styles.productReviewComment}>
+													{review.comment}
+												</p>
+											)}
+										</div>
+									</li>
+								</ul>
+						  ))
+						: 'No reviews yet'}{' '}
+				</div>
 			</div>
 		</>
 	);
@@ -189,10 +217,9 @@ export const getStaticProps: GetStaticProps<ProductPageProps> = async ({
 
 		return {
 			props: { product },
-			revalidate: 60 // ISR: обновлять раз в минуту
+			revalidate: 60
 		};
 	} catch {
-		// Если упали — пусть 404, чтобы не отдавать “битую” страницу
 		return { notFound: true };
 	}
 };

@@ -9,7 +9,8 @@
 	grid-template-rows: repeat(1fr, 1fr);
 	grid-template-areas:
 		'image info order'
-		'description description description';
+		'description description description'
+		'reviews reviews reviews';
 	align-items: flex-start;
 }
 
@@ -186,6 +187,15 @@
 	text-align: center;
 }
 
+.productReviews {
+	grid-area: reviews;
+	display: flex;
+	gap: 1rem;
+	font-size: 1rem;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
 @media screen and (max-width: 995px) {
 	.wrapper {
 		gap: 1.5rem 0;
@@ -195,7 +205,8 @@
 			'image'
 			'info'
 			'order'
-			'description';
+			'description'
+			'reviews';
 		justify-content: center;
 	}
 	.productImage {
