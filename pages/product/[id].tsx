@@ -1,13 +1,13 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-
 import { Rating } from '@/components/Rating/Rating';
 import { API } from '@/helpers/api';
 import { IAllProducts, IProduct } from '@/interfaces/products';
 import { withLayout } from '@/layout/Layout';
+import { format } from 'date-fns';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './Product.module.css';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com';
@@ -81,38 +81,38 @@ function ProductPage({
 					</Link>
 					<div className={styles.productDimensions}>
 						<div>Dimensions:</div>
-						<div className={styles.productDimension}>
+						<span className={styles.productDimension}>
 							Width: {product.dimensions.width}
-						</div>
-						<div className={styles.productDimension}>
+						</span>
+						<span className={styles.productDimension}>
 							Height:
 							{product.dimensions.height}
-						</div>
-						<div className={styles.productDimension}>
+						</span>
+						<span className={styles.productDimension}>
 							Depth:
 							{product.dimensions.depth}
-						</div>
+						</span>
 					</div>
-					<div>
+					<span>
 						Stock:
 						{product.stock <= 5 ? `remained ${product.stock}` : product.stock}
-					</div>
-					<div className={styles.warranty}>
+					</span>
+					<span className={styles.warranty}>
 						Warranty:
 						{product.warrantyInformation
 							? `${product.warrantyInformation}`
 							: 'No warranty'}
-					</div>
-					<div className={styles.productDelivery}>
+					</span>
+					<span className={styles.productDelivery}>
 						Delivery:
 						{product.shippingInformation
 							? `${product.shippingInformation}`
 							: 'No delivery'}
-					</div>
-					<div className={styles.productReturn}>
+					</span>
+					<span className={styles.productReturn}>
 						Return:
 						{product.returnPolicy ? `${product.returnPolicy}` : 'No return'}
-					</div>
+					</span>
 				</div>
 				<div className={styles.order}>
 					<div className={styles.productPrices}>
@@ -145,34 +145,34 @@ function ProductPage({
 					<h3>About product</h3>
 					<p>{product.description}</p>
 				</div>
-				<div className={styles.productReviews}>
+				<ul className={styles.productReviewsList}>
 					{product.reviews && product.reviews.length > 0
 						? product.reviews.map((review, index) => (
-								<ul key={index} className={styles.productReview}>
-									<li>
-										<div className={styles.productReview}>
-											<h4 className={styles.productReviewName}>
-												{review.reviewerName}
-											</h4>
-											<div className={styles.productReviewDate}>
-												{review.date}
-											</div>
-											{review.rating && (
-												<div className={styles.productReviewRating}>
-													Rating: <Rating rating={review.rating} />
-												</div>
-											)}
-											{review.comment && (
-												<p className={styles.productReviewComment}>
-													{review.comment}
-												</p>
-											)}
-										</div>
-									</li>
-								</ul>
+								<li>
+									<div className={styles.productReviews}>
+										<h4 className={styles.productReviewName}>
+											{review.reviewerName}
+										</h4>
+										<span className={styles.productReviewDate}>
+											{review.date
+												? format(new Date(review.date), 'dd.MM.yyyy')
+												: null}
+										</span>
+										{review.rating && (
+											<span className={styles.productReviewRating}>
+												Rating: <Rating rating={review.rating} />
+											</span>
+										)}
+										{review.comment && (
+											<p className={styles.productReviewComment}>
+												{review.comment}
+											</p>
+										)}
+									</div>
+								</li>
 						  ))
 						: 'No reviews yet'}{' '}
-				</div>
+				</ul>
 			</div>
 		</>
 	);
