@@ -63,16 +63,18 @@ function ProductPage({
 					>
 						Category: {product.category}
 					</Link>
-					<ul className={styles.productTags}>
+					<div className={styles.productTags}>
 						Tags:
-						{product.tags.map((tag, index) => (
-							<li key={index}>
-								<Link href={tag} className={styles.productTag}>
-									{tag}
-								</Link>
-							</li>
-						))}
-					</ul>
+						<ul className={styles.productTagsList}>
+							{product.tags.map((tag, index) => (
+								<li key={index}>
+									<Link href={tag} className={styles.productTag}>
+										{tag}
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
 					<Link
 						href={`/brands/${product.brand}`}
 						className={styles.productBrand}
@@ -148,7 +150,7 @@ function ProductPage({
 				<ul className={styles.productReviewsList}>
 					{product.reviews && product.reviews.length > 0
 						? product.reviews.map((review, index) => (
-								<li>
+								<li key={index}>
 									<div className={styles.productReviews}>
 										<h4 className={styles.productReviewName}>
 											{review.reviewerName}
@@ -159,9 +161,10 @@ function ProductPage({
 												: null}
 										</span>
 										{review.rating && (
-											<span className={styles.productReviewRating}>
-												Rating: <Rating rating={review.rating} />
-											</span>
+											<div className={styles.productReviewRating}>
+												Rating:{' '}
+												<Rating rating={review.rating} isEditable={false} />
+											</div>
 										)}
 										{review.comment && (
 											<p className={styles.productReviewComment}>

@@ -50,16 +50,18 @@ export const Rating = forwardRef(
 				(r: React.JSX.Element, i: number) => {
 					return (
 						<span
-							role={isEditable ? 'slider' : ''}
+							key={i}
+							role={isEditable ? 'spinbutton' : ''}
 							aria-label={
 								isEditable
-									? 'Select a rating. Use the arrow keys on your keyboard to move between the stars'
-									: `Rating ${rating}`
+									? 'Select a rating'
+									: `Rating is ${rating} out of 5 stars`
 							}
 							aria-valuemin={1}
 							aria-valuemax={5}
 							aria-valuenow={rating}
-							aria-invalid={error ? true : false}
+							aria-invalid={!!error}
+							aria-valuetext={`${rating} out of 5 stars`}
 							className={cn(styles.star, {
 								[styles.filled]: i < currentRating,
 								[styles.editable]: isEditable

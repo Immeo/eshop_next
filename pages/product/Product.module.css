@@ -60,6 +60,12 @@
 
 .productTags {
 	display: flex;
+	gap: 0 0.1rem;
+	align-items: flex-start;
+}
+
+.productTagsList {
+	display: flex;
 	margin: 0;
 	padding: 0;
 	gap: 0 1rem;

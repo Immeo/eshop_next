@@ -21,7 +21,11 @@ export const SearchForm = ({
 				placeholder='Search...'
 				className={style.input}
 			/>
-			<button type='submit' className={style.btn}>
+			<button
+				type='submit'
+				aria-label='Let search button'
+				className={style.btn}
+			>
 				<GlassIcon />
 			</button>
 		</Form>
