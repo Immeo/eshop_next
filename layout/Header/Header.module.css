@@ -47,6 +47,23 @@
 	color: var(--primary-hover);
 }
 
+.btnAcc {
+	margin: 0;
+	padding: 0.3rem;
+	font-size: 1rem;
+	font-weight: 700;
+	border: none;
+	transition: all 0.2 ease;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	background: var(--button-type-one);
+	color: var(--subtitle);
+}
+
+.btnAcc:hover {
+	color: var(--subtitle-hover);
+	cursor: pointer;
+}
+
 .mobileMenuOpen {
 	display: flex;
 	position: absolute;
