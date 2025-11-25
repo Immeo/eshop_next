@@ -1,184 +1,273 @@
+import cn from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
+
 import { SearchForm } from '@/components/SearchForm/SearchForm';
 import { WindowForms } from '@/components/WindowForms/WindowForms';
 import CloseIcon from '@/helpers/icons/close.svg';
-import cn from 'classnames';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
 import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
 import BurgerIcon from './burger.svg';
 import Logo from './eshop.svg';
 
+const COLLAPSE_VARIANTS = {
+	hidden: { height: 0, opacity: 0 },
+	visible: { height: 'auto', opacity: 1 }
+};
+
 export const Header = ({
 	className,
 	...props
 }: HeaderProps): React.JSX.Element => {
-	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-	const [isAuthWindows, setIsAuthWindows] = useState<boolean>(false);
-	const route = useRouter();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isAuthWindows, setIsAuthWindows] = useState(false);
 
+	const router = useRouter();
+
+	// Уникальные id для десктоп/мобайл
+	const desktopCatBtnId = useId();
+	const desktopCatPanelId = useId();
+	const mobileCatBtnId = useId();
+	const mobileCatPanelId = useId();
+
+	// Закрываем всё при навигации (Pages Router события)
 	useEffect(() => {
-		if (isMenuOpen) {
+		const handleRouteStart = () => {
 			setIsMenuOpen(false);
-		} else if (isMobileMenuOpen) {
 			setIsMobileMenuOpen(false);
-		}
-	}, [route]);
+			setIsAuthWindows(false);
+		};
+		router.events.on('routeChangeStart', handleRouteStart);
+		router.events.on('hashChangeStart', handleRouteStart);
+		return () => {
+			router.events.off('routeChangeStart', handleRouteStart);
+			router.events.off('hashChangeStart', handleRouteStart);
+		};
+	}, [router.events]);
 
+	// Esc закрывает всё
 	useEffect(() => {
-		if (isAuthWindows) {
-			setIsAuthWindows(false);
-		}
-	}, [route]);
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (
+				e.key === 'Escape' &&
+				(isMenuOpen || isMobileMenuOpen || isAuthWindows)
+			) {
+				e.preventDefault();
+				setIsMenuOpen(false);
+				setIsMobileMenuOpen(false);
+				setIsAuthWindows(false);
+			}
+		};
+		document.addEventListener('keydown', onKeyDown);
+		return () => document.removeEventListener('keydown', onKeyDown);
+	}, [isMenuOpen, isMobileMenuOpen, isAuthWindows]);
 
-	const toggleMenu = () => {
-		setIsMenuOpen(!isMenuOpen);
-	};
+	// Блокируем скролл фона при открытом мобильном меню
+	useEffect(() => {
+		if (!isMobileMenuOpen) return;
+		const prev = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		return () => {
+			document.body.style.overflow = prev;
+		};
+	}, [isMobileMenuOpen]);
 
-	const toggleMobileMenu = () => {
-		setIsMobileMenuOpen(!isMobileMenuOpen);
-	};
+	const toggleMenu = useCallback(() => setIsMenuOpen(v => !v), []);
+	const toggleMobileMenu = useCallback(() => setIsMobileMenuOpen(v => !v), []);
+	const toggleWindow = useCallback(() => setIsAuthWindows(v => !v), []);
 
-	const toggleWindow = () => {
-		if (isAuthWindows) {
-			setIsAuthWindows(false);
-		} else {
-			setIsAuthWindows(true);
-		}
-	};
-
-	const variants = {
-		hidden: { height: 0, opacity: 0 },
-		visible: { height: 'auto', opacity: 1 }
-	};
-
-	const variantsMobile = {
-		hidden: { height: 0, opacity: 0 },
-		visible: { height: 'auto', opacity: 1 }
-	};
+	const categoryButtonCommonProps = useMemo(
+		() => ({ type: 'button' as const, 'aria-haspopup': 'menu' as const }),
+		[]
+	);
 
 	return (
 		<>
-			<WindowForms isOpenedWindow={isAuthWindows} />
 			<header className={cn(styles.header, className)} {...props}>
 				<Logo aria-label='Logo' className={styles.logo} />
+
 				<div className={styles.searchDesktop}>
 					<SearchForm />
 				</div>
+
 				<ul className={styles.list}>
 					<li>
 						<Link href='/' className={styles.link}>
 							Home
 						</Link>
 					</li>
-					<li aria-label='A list item with a button inside to open the list of categories'>
+
+					<li aria-label='List item with a button to open categories'>
 						<button
-							type='button'
-							aria-label='Open list category'
+							{...categoryButtonCommonProps}
+							aria-label='Open categories'
 							aria-expanded={isMenuOpen}
+							aria-controls={desktopCatPanelId}
 							onClick={toggleMenu}
-							id='btncat'
+							id={desktopCatBtnId}
 							className={styles.link}
 						>
 							Product
 						</button>
-						<motion.div
-							animate={isMenuOpen ? 'visible' : 'hidden'}
-							initial='hidden'
-							variants={variants}
-							className={styles.animatedMenu}
-						>
-							<Menu
-								isMenuOpened={isMenuOpen}
-								className={styles.subMenuDesktop}
-							/>
-						</motion.div>
+
+						<AnimatePresence>
+							{isMenuOpen && (
+								<motion.div
+									key='desktop-submenu'
+									initial='hidden'
+									animate='visible'
+									exit='hidden'
+									variants={COLLAPSE_VARIANTS}
+									className={styles.animatedMenu}
+									role='menu'
+									id={desktopCatPanelId}
+									aria-labelledby={desktopCatBtnId}
+								>
+									<Menu
+										isMenuOpened={isMenuOpen}
+										className={styles.subMenuDesktop}
+									/>
+								</motion.div>
+							)}
+						</AnimatePresence>
 					</li>
+
 					<li>
 						<button
 							type='button'
 							onClick={toggleWindow}
 							className={styles.btnAcc}
 						>
-							Login | Registrations
+							Login | Registration
 						</button>
 					</li>
 				</ul>
+
 				<button
 					type='button'
 					aria-label='Open mobile menu'
+					aria-expanded={isMobileMenuOpen}
+					aria-controls='mobile-menu-drawer'
 					onClick={toggleMobileMenu}
 					className={styles.burgerBtn}
 				>
 					<BurgerIcon className={styles.burger} />
 				</button>
-				{isMobileMenuOpen && (
-					<div
-						tabIndex={isMobileMenuOpen ? 0 : -1}
-						className={
-							isMobileMenuOpen ? styles.mobileMenuOpen : styles.mobileMenuClose
-						}
-					>
-						<button
-							type='button'
-							onClick={toggleMobileMenu}
-							className={styles.closeBtn}
+
+				<AnimatePresence>
+					{isMobileMenuOpen && (
+						<motion.div
+							key='mobile-menu'
+							id='mobile-menu-drawer'
+							role='dialog'
+							aria-modal='true'
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							className={styles.mobileMenuBackdrop}
+							onMouseDown={e => {
+								// Клик по подложке закрывает меню
+								if (e.target === e.currentTarget) setIsMobileMenuOpen(false);
+							}}
 						>
-							<CloseIcon className={styles.close} />
-						</button>
-						<SearchForm className={styles.searchMobile} />
-						<motion.ul
-							initial='hidden'
-							variants={variantsMobile}
-							animate={isMobileMenuOpen ? 'visible' : 'hidden'}
-							aria-label='Mobile menu'
-							className={styles.mobileList}
-						>
-							<li>
-								<Link href='/' className={styles.link}>
-									Home
-								</Link>
-							</li>
-							<li aria-label='A list item with a button inside to open the list of categories'>
+							<motion.div
+								className={styles.mobileMenuOpen}
+								initial={{ x: '100%' }}
+								animate={{ x: 0 }}
+								exit={{ x: '100%' }}
+								transition={{ type: 'tween', duration: 0.2 }}
+								onMouseDown={e => e.stopPropagation()}
+							>
 								<button
 									type='button'
-									aria-label='Open list category'
-									aria-expanded={isMenuOpen}
-									onClick={toggleMenu}
-									id='btncat'
-									className={styles.link}
+									onClick={toggleMobileMenu}
+									className={styles.closeBtn}
+									aria-label='Close mobile menu'
 								>
-									Product
+									<CloseIcon className={styles.close} />
 								</button>
-								<motion.div
-									animate={isMenuOpen ? 'visible' : 'hidden'}
+
+								<SearchForm className={styles.searchMobile} />
+
+								<motion.ul
 									initial='hidden'
-									variants={variants}
-									className={styles.mobileanimatedMenu}
+									variants={COLLAPSE_VARIANTS}
+									animate='visible'
+									aria-label='Mobile menu'
+									className={styles.mobileList}
 								>
-									<Menu
-										isMenuOpened={isMenuOpen}
-										className={styles.subMenuMobile}
-									/>
-								</motion.div>
-							</li>
-							<li>
-								<button
-									type='button'
-									onClick={toggleWindow}
-									className={styles.btnAcc}
-								>
-									Login | Registrations
-								</button>
-							</li>
-						</motion.ul>
-					</div>
-				)}
+									<li>
+										<Link
+											href='/'
+											className={styles.link}
+											onClick={() => setIsMobileMenuOpen(false)}
+										>
+											Home
+										</Link>
+									</li>
+
+									<li aria-label='List item with a button to open categories'>
+										<button
+											{...categoryButtonCommonProps}
+											aria-label='Open categories'
+											aria-expanded={isMenuOpen}
+											aria-controls={mobileCatPanelId}
+											onClick={toggleMenu}
+											id={mobileCatBtnId}
+											className={styles.link}
+										>
+											Product
+										</button>
+
+										<AnimatePresence>
+											{isMenuOpen && (
+												<motion.div
+													key='mobile-submenu'
+													initial='hidden'
+													animate='visible'
+													exit='hidden'
+													variants={COLLAPSE_VARIANTS}
+													className={styles.mobileanimatedMenu}
+													role='menu'
+													id={mobileCatPanelId}
+													aria-labelledby={mobileCatBtnId}
+												>
+													<Menu
+														isMenuOpened={isMenuOpen}
+														className={styles.subMenuMobile}
+													/>
+												</motion.div>
+											)}
+										</AnimatePresence>
+									</li>
+
+									<li>
+										<button
+											type='button'
+											onClick={() => {
+												setIsMobileMenuOpen(false);
+												toggleWindow();
+											}}
+											className={styles.btnAcc}
+										>
+											Login | Registration
+										</button>
+									</li>
+								</motion.ul>
+							</motion.div>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</header>
+
+			<WindowForms
+				isOpenedWindow={isAuthWindows}
+				setIsOpenedWindow={setIsAuthWindows}
+			/>
 		</>
 	);
 };

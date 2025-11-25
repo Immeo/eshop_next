@@ -1,0 +1,42 @@
+.form {
+	display: flex;
+	gap: 1rem 0;
+	font-size: 1rem;
+	flex-direction: column;
+	align-items: center;
+}
+
+.input {
+	width: 100%;
+	padding: 0.5rem;
+	border-radius: 5px;
+	border: none;
+}
+
+.input::placeholder {
+	font-size: 1rem;
+	color: var(--subtitle);
+}
+
+.error {
+}
+
+.btn {
+	width: 100%;
+	padding: 0.5rem;
+	font-size: 1rem;
+	font-weight: 600;
+	white-space: nowrap;
+	border: none;
+	border-radius: 16px;
+	transition: color 0.2 ease;
+	background: var(--button-type-two);
+	color: var(--button-type-two-text);
+	cursor: pointer;
+}
+
+.btn:hover {
+	line-height: 1.5;
+	text-decoration: line-through;
+	color: var(--button-type-two-text-hover);
+}

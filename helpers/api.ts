@@ -21,5 +21,8 @@ export const API = {
 		someAndSort: (what: productKey, order: 'asc' | 'desc', limit: number) =>
 			process.env.NEXT_PUBLIC_DOMAIN +
 			`products?sorting=${what}&order=${order}&limit=${limit}`
+	},
+	auth: {
+		login: process.env.NEXT_PUBLIC_DOMAIN + 'auth/login'
 	}
 };
