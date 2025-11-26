@@ -28,13 +28,11 @@ export const Header = ({
 
 	const router = useRouter();
 
-	// Уникальные id для десктоп/мобайл
 	const desktopCatBtnId = useId();
 	const desktopCatPanelId = useId();
 	const mobileCatBtnId = useId();
 	const mobileCatPanelId = useId();
 
-	// Закрываем всё при навигации (Pages Router события)
 	useEffect(() => {
 		const handleRouteStart = () => {
 			setIsMenuOpen(false);
@@ -49,7 +47,6 @@ export const Header = ({
 		};
 	}, [router.events]);
 
-	// Esc закрывает всё
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (
@@ -66,7 +63,6 @@ export const Header = ({
 		return () => document.removeEventListener('keydown', onKeyDown);
 	}, [isMenuOpen, isMobileMenuOpen, isAuthWindows]);
 
-	// Блокируем скролл фона при открытом мобильном меню
 	useEffect(() => {
 		if (!isMobileMenuOpen) return;
 		const prev = document.body.style.overflow;
@@ -170,7 +166,6 @@ export const Header = ({
 							exit={{ opacity: 0 }}
 							className={styles.mobileMenuBackdrop}
 							onMouseDown={e => {
-								// Клик по подложке закрывает меню
 								if (e.target === e.currentTarget) setIsMobileMenuOpen(false);
 							}}
 						>
