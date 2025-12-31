@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/context/AuthContext';
 import '@/styles/globals.css';
 import '@/styles/normalize.css';
 import type { AppProps } from 'next/app';
@@ -12,12 +13,14 @@ const font = DM_Serif_Text({
 export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
-			<Head>
-				<title>Eshop - Find your product</title>
-			</Head>
-			<div className={font.className}>
-				<Component {...pageProps} />
-			</div>
+			<AuthProvider>
+				<Head>
+					<title>Eshop - Find your product</title>
+				</Head>
+				<div className={font.className}>
+					<Component {...pageProps} />
+				</div>
+			</AuthProvider>
 		</>
 	);
 }

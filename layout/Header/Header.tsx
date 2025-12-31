@@ -1,12 +1,12 @@
+import { SearchForm } from '@/components/SearchForm/SearchForm';
+import { WindowForms } from '@/components/WindowForms/WindowForms';
+import { useAuth } from '@/context/AuthContext';
+import CloseIcon from '@/helpers/icons/close.svg';
 import cn from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
-
-import { SearchForm } from '@/components/SearchForm/SearchForm';
-import { WindowForms } from '@/components/WindowForms/WindowForms';
-import CloseIcon from '@/helpers/icons/close.svg';
 import { Menu } from '../Menu/Menu';
 import styles from './Header.module.css';
 import { HeaderProps } from './Header.props';
@@ -25,6 +25,9 @@ export const Header = ({
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isAuthWindows, setIsAuthWindows] = useState(false);
+	const { user, isAuthed, isReady, logout } = useAuth();
+
+	const displayName = user?.firstName || user?.username || 'User';
 
 	const router = useRouter();
 
@@ -32,6 +35,8 @@ export const Header = ({
 	const desktopCatPanelId = useId();
 	const mobileCatBtnId = useId();
 	const mobileCatPanelId = useId();
+
+	console.log(displayName);
 
 	useEffect(() => {
 		const handleRouteStart = () => {
@@ -241,16 +246,33 @@ export const Header = ({
 									</li>
 
 									<li>
-										<button
-											type='button'
-											onClick={() => {
-												setIsMobileMenuOpen(false);
-												toggleWindow();
-											}}
-											className={styles.btnAcc}
-										>
-											Login | Registration
-										</button>
+										{isReady && isAuthed ? (
+											<>
+												{displayName ? (
+													<span className={styles.link}>
+														Hello, {displayName}!
+													</span>
+												) : null}
+												<button
+													type='button'
+													onClick={() => {
+														logout();
+														setIsMobileMenuOpen(false);
+													}}
+													className={styles.link}
+												>
+													Logout
+												</button>
+											</>
+										) : (
+											<button
+												type='button'
+												onClick={toggleWindow}
+												className={styles.link}
+											>
+												Login | Registration
+											</button>
+										)}
 									</li>
 								</motion.ul>
 							</motion.div>

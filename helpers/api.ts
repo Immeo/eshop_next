@@ -22,7 +22,9 @@ export const API = {
 			process.env.NEXT_PUBLIC_DOMAIN +
 			`products?sorting=${what}&order=${order}&limit=${limit}`
 	},
-	auth: {
-		login: process.env.NEXT_PUBLIC_DOMAIN + 'auth/login'
+	byAuth: {
+		login: process.env.NEXT_PUBLIC_DOMAIN + 'auth/login',
+		refresh: process.env.NEXT_PUBLIC_DOMAIN + 'auth/refresh',
+		me: process.env.NEXT_PUBLIC_DOMAIN + 'users/profile'
 	}
 };
